@@ -1,5 +1,22 @@
 # CDA :sparkles:
 
+## Reading work
+
+Fill table with table from [course page](http://www2.imm.dtu.dk/courses/02582/).
+
+|Week|Date|Subjects|Reading|
+|-|-|-|-|
+|1|?|a|a|
+|2|?|a|a|
+|3|?|a|a|
+|4|?|a|a|
+|5|?|a|a|
+|6|?|a|a|
+|7|?|a|a|
+|8|?|a|a|
+
+
+
 
 ## Commit Message
 ```
