@@ -17,8 +17,7 @@ path = 'exercises/week1/python/'
 # b)
 # c)
 
-# %%
-
+# %% Ex.1
 if __name__ == "__main__":
     diabetPath = path + 'DiabetesDataNormalized.txt'
     T = np.loadtxt(diabetPath, delimiter = ' ', skiprows = 1)
@@ -56,7 +55,6 @@ if __name__ == "__main__":
     print('MSE:',MSE)
 
 # %% Ex.2
-import scipy.linalg as lng
 
 if __name__ == "__main__":
     n = 10 # nr of obs
@@ -85,8 +83,6 @@ if __name__ == "__main__":
     ax2.boxplot(betas.T)
 
 # %% Ex.3
-
-
 if __name__ == "__main__":
     def ridgeMulti(X, _lambda, p, y):
         inner_prod = np.linalg.inv(np.matmul(X.T, X) + _lambda * np.eye(p,p))
@@ -146,58 +142,34 @@ if __name__ == "__main__":
 
 # %% Ex.4
 if __name__ == "__main__":
-    def ridgeMulti(X, _lambda, p, y):
-        inner_prod = np.linalg.inv(np.matmul(X.T, X) + _lambda * np.eye(p,p))
-        outer_prod = np.matmul(X.T, y)
-        betas = np.matmul(inner_prod, outer_prod)
-        return betas
-
     diabetPath = path + 'DiabetesDataNormalized.txt'
     T = np.loadtxt(diabetPath, delimiter = ' ', skiprows = 1)
+
     y = T[:, 10]
     X = T[:,:10]
 
+    K = 5 # Nr of neighbors
+
     [n, p] = np.shape(X)
+    yhat = np.zeros(n)
 
-    off = np.ones(n)
-    M = np.c_[off, X] # Include offset / intercept
+    X = preproc.scale(X) # Normalize to zero mean and unit variance
+    distances = np.zeros(n)
+    # For each obs, compare distance to all other points in X
+    for i in range(n):
+        for j in range(n):
+            distances[j] = distance.euclidean(X[i,:], X[j, :])
 
-    # Linear solver
-    beta_ols, res, rnk, s = lng.lstsq(M, y)
+        # Sort all the distances
+        idx = np.argsort(distances)[1:(K + 1)] # Skip first, as distance to "itself" does not make sense
+        Wt = sum(distances[idx]) # Weight of k nearest neighbors
+        W = distances[idx] / Wt # Weighing average
 
-    k = 100; # try k values of lambda
-    lambdas = np.logspace(-4, 3, k)
+        yhat[i] = np.matmul(W, y[idx]) # Final value
 
-    betas = np.zeros((p,k))
+    MSE = np.mean((y-yhat) ** 2)
 
-    for i in range(k):
-        betas[:, i] = ridgeMulti(X, lambdas[i], p, y)
-
-    plt.figure()
-    plt.semilogx(lambdas, betas.T )
-    plt.xlabel("Lambdas")
-    plt.ylabel("Betas")
-
-    # Bias and variance of the ridge regression, same as exercise 2 - just for ridge
-    n = 10 # nr of obs
-    p = 3 # features / vars
-    beta_true = np.array([1, 2, 3])
-    X = np.random.randn(n, p) # random drawing, feature matrix
-
-    m = 100 # nr of experiments
-
-    betas2 = np.zeros((k, p, m)) # all variable estimates
-
-    sigma = 0.2
-
-    for i in range(k):
-        for j in range(m):
-            y = np.matmul(X, beta_true) + sigma * np.random.randn(n) # Measures response - true value plus noise level
-            betas2[i, :, j] = ridgeMulti(X, lambdas[i], p, y)
-
-    betas_mean = np.mean(betas2, axis = 2)
-
-    plt.figure()
-    plt.semilogx(lambdas, betas_mean)
-    plt.xlabel("Lambdas")
-    plt.ylabel("Betas")
+    plt.scatter(y, yhat, marker = "*")
+    plt.xlabel("y")
+    plt.ylabel("yhat")
+    plt.title("KNN on diabetes data")
