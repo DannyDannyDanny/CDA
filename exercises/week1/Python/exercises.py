@@ -5,12 +5,11 @@ from sklearn import preprocessing as preproc
 import os
 
 # If using as script and not from console;
-path = "C:\\Users\\dnor\\Desktop\\02582\\Lecture1\\S1"
-
 os.listdir('exercises/week1/')
+path = 'exercises/week1/python/'
 
 if __name__ == "__main__":
-    diabetPath = path + '\\DiabetesDataNormalized.txt'
+    diabetPath = path + 'DiabetesDataNormalized.txt'
     T = np.loadtxt(diabetPath, delimiter = ' ', skiprows = 1)
 
     y = T[:, 10]
@@ -41,3 +40,6 @@ if __name__ == "__main__":
     plt.xlabel("y")
     plt.ylabel("yhat")
     plt.title("KNN on diabetes data")
+    plt.show()
+
+    print('MSE:',MSE)
