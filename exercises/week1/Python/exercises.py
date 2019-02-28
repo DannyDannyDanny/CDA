@@ -7,6 +7,8 @@ import os
 # If using as script and not from console;
 path = "C:\\Users\\dnor\\Desktop\\02582\\Lecture1\\S1"
 
+os.listdir('exercises/week1/')
+
 if __name__ == "__main__":
     diabetPath = path + '\\DiabetesDataNormalized.txt'
     T = np.loadtxt(diabetPath, delimiter = ' ', skiprows = 1)
