@@ -1299,13 +1299,6 @@ plt.show()
 ## Ex5
 
 ```python
-# -*- coding: utf-8 -*-
-"""
-Created on Wed Feb 28 15:08:11 2018
-
-@author: dnor
-"""
-#%%
 import numpy as np
 import pandas as pd
 from sklearn.cross_validation import KFold
