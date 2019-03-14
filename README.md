@@ -15,9 +15,6 @@ Fill table with table from [course page](http://www2.imm.dtu.dk/courses/02582/).
 |7|?|a|a|
 |8|?|a|a|
 
-
-
-
 ## Commit Message
 ```
 <type>(<scope>): <subject>i
@@ -69,6 +66,11 @@ Draw a line minimizing **Residual Square Sum (RSS)** - i.e distance of every dat
 ### Ridge regression
 
 ![linreg](figs/biasvar.png)
+
+## GINI index & Split criterion
+> used when building tree, thereafter pruned with rss
+
+![gini-split](figs/gini-split.png)
 
 
 ## Random Notes
