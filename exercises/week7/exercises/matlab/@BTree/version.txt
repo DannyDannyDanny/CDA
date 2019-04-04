@@ -1,2 +1,0 @@
-BTree v0.3
-Binary tree data structure for matlab
