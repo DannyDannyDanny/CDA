@@ -103,3 +103,5 @@ creds/
 cn/
 
 .DS_Store
+
+*aug.csv
