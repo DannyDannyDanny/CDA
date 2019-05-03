@@ -15,23 +15,37 @@ files_dict = {}
 s = 1000 #desired sample size
 e = "ISO-8859-1"
 randomize = 1
+
+sorted(file_list)[2:]
+# for filename in sorted(file_list)[2:]:
 for filename in file_list:
     print('---->',filename)
     if randomize:
-        loaded_successfully = 0
-        while not loaded_successfully:
-            try:
-                print('-> counting lines')
-                # number of records in file (excludes header)
-                n = sum(1 for line in open(filename,encoding=e)) - 1
-                print('->',n,'lines counted, sampling',s,'lines')
-                skip = sorted(random.sample(range(1,n+1),n-s))
-                #the 0-indexed header will not be included in the skip list
-                df = pd.read_csv(filename, skiprows=skip, encoding = e)
-                files_dict[filename] = df
-                loaded_successfully = 1
-            except ParserError:
-                print('ParserError Caught: Error reading. Randomizing sample')
+        print('-> counting lines')
+        # number of records in file (excludes header)
+        n = sum(1 for line in open(filename,encoding=e)) - 1
+        print('->',n,'lines counted, sampling',s,'lines')
+        skip = sorted(random.sample(range(1,n+1),n-s))
+        #the 0-indexed header will not be included in the skip list
+        df = pd.read_csv(filename, skiprows=skip, encoding = e, error_bad_lines=False)
+        files_dict[filename] = df
+        loaded_successfully = 1
+
+
+        # loaded_successfully = 0
+        # while not loaded_successfully:
+        #     try:
+        #         print('-> counting lines')
+        #         # number of records in file (excludes header)
+        #         n = sum(1 for line in open(filename,encoding=e)) - 1
+        #         print('->',n,'lines counted, sampling',s,'lines')
+        #         skip = sorted(random.sample(range(1,n+1),n-s))
+        #         #the 0-indexed header will not be included in the skip list
+        #         df = pd.read_csv(filename, skiprows=skip, encoding = e)
+        #         files_dict[filename] = df
+        #         loaded_successfully = 1
+        #     except pd.errors.ParserError:
+        #         print('ParserError Caught: Error reading. Randomizing sample')
     else:
         df = pd.read_csv(filename,nrows=s,encoding =e)
         files_dict[filename] = df
