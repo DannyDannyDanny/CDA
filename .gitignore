@@ -103,5 +103,9 @@ creds/
 cn/
 
 .DS_Store
-
+# ignore data
 *aug.csv
+
+# ignore docs
+*.docx
+*.pptx
