@@ -71,8 +71,6 @@ delme = set()
 for col_name in cat_cols:
     delme = delme.union(set(data[col_name].unique()))
 
-
-
 # %% FILL CATEGORICAL NANs VALUES WITH MOST POPULAR VALUE
 cat_cols = ['X96','X97','X98','X99','X100']
 for col_name in cat_cols:
