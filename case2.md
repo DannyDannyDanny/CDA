@@ -1,4 +1,10 @@
 
+# Other models
+* Gaussian Naive-Bayes (GaussianNB) - ???
+* K-nearest neighbors - Classifier implementing the k-nearest neighbors vote
+* Gaussian process classification (GPC) - based on Laplace approximation. Internally, the Laplace approximation is used for approximating the non-Gaussian posterior by a Gaussian. Currently, the implementation is restricted to using the logistic link function.
+* Neural Net (MLP) - Multi-layer Perceptron classifier. This model optimizes the log-loss function using LBFGS or stochastic gradient descent.
+
 # Procedure
 
 
@@ -9,6 +15,9 @@
 
 # Findings
 * Many visits to the website are short
+* very few `sessionsummary` entries probably due to client side privacy tools such as tracking blockers.
+
+
 
 # Dataset
 ## Integrity due user behavior
